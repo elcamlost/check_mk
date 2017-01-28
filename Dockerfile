@@ -76,7 +76,8 @@ RUN \
      	fonts-liberation \
      	apache2-api-20120211 \
      	apache2 \
-     	apache2-bin
+     	apache2-bin \
+	ssh
 
 ADD    bootstrap.sh /opt/
 EXPOSE 5000/tcp
