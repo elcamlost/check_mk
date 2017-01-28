@@ -1,63 +1,91 @@
-FROM centos:7
+FROM debian:latest
 
-ENV CMK_VERSION="1.2.8p12"
-ENV CMK_SITE="mva"
+ENV CMK_VERSION="1.2.8p16"
+ENV CMK_SITE="cetera"
 ENV MAILHUB="undefined"
 
 RUN \
-    yum -y install epel-release && \
-    yum install -y --nogpgcheck time \
-        traceroute \
-        dialog \
-        fping \
-        graphviz \
-        graphviz-gd \
-        httpd \
-        libevent \
-        libdbi \
-        libmcrypt \
-        libtool-ltdl \
-        mod_fcgid \
-        mariadb-server \
-        net-snmp \
-        net-snmp-utils \
-        pango \
-        patch \
-        perl-Net-SNMP \
-        perl-Locale-Maketext-Simple \
-        perl-IO-Zlib \
-        php \
-        php-mbstring \
-        php-pdo \
-        php-gd \
-        rsync \
-        uuid \
-        xinetd \
-        cronie \
-        python-ldap \
-        freeradius-utils \
-        libpcap \
-        python-reportlab \
-        bind-utils \
-        python-imaging \
-        poppler-utils \
-        libgsf \
-        rpm-build \
-        pyOpenSSL \
-        fping \
-        libmcrypt \
-        perl-Net-SNMP \
-        which \
-        ssmtp \
-        mailx
+    apt-get update && apt-get -y install \
+		time \
+     	curl \
+     	traceroute \
+     	dialog \
+     	dnsutils \
+     	fping \
+     	graphviz \
+     	libapache2-mod-fcgid \
+     	libapache2-mod-proxy-html \
+     	libdbi1 \
+     	python-openssl \
+     	poppler-utils \
+     	python-imaging \
+     	python-reportlab \
+     	libglib2.0-0 \
+     	libgsf-1-114 \
+     	libpcap0.8 \
+     	libfreeradius-client2 \
+     	python-ldap \
+     	xinetd \
+     	unzip \
+     	snmp \
+     	lcab \
+     	rpcbind \
+     	smbclient \
+     	rsync \
+     	php-pear \
+     	php5-sqlite \
+     	libevent-2.0-5 \
+     	libgd3 \
+     	libltdl7 \
+     	libnet-snmp-perl \
+     	libpango1.0-0 \
+     	libperl5.20 \
+     	libsnmp-perl \
+     	libpython2.7 \
+     	patch \
+     	binutils \
+     	rpm \
+     	php5 \
+     	php5-cgi \
+     	php5-cli \
+     	php5-gd \
+     	php5-mcrypt \
+     	libbind9-90 \
+     	libdns100 \
+     	libgssapi-krb5-2 \
+     	libisc95 \
+     	libisccfg90 \
+     	libk5crypto3 \
+     	libkrb5-3 \
+     	liblwres90 \
+     	libxml2 \
+     	bind9-host \
+     	libcurl3 \
+     	libcdt5 \
+     	libcgraph6 \
+     	libexpat1 \
+     	libgd3 \
+     	libgvc6 \
+     	libgvpr2 \
+     	libx11-6 \
+     	libxaw7 \
+     	libxmu6 \
+     	libxt6 \
+     	fonts-liberation \
+     	apache2-api-20120211 \
+     	apache2 \
+     	apache2-bin
 
 ADD    bootstrap.sh /opt/
 EXPOSE 5000/tcp
 
-#VOLUME /opt/omd
+VOLUME /opt/omd
 
 # retrieve and install the check mk binaries
-RUN rpm -ivh https://mathias-kettner.de/support/${CMK_VERSION}/check-mk-raw-${CMK_VERSION}-el7-36.x86_64.rpm
+RUN \
+	curl --remote-name https://mathias-kettner.de/support/${CMK_VERSION}/check-mk-raw-${CMK_VERSION}_0.jessie_amd64.deb && \
+	dpkg -i check-mk-raw-${CMK_VERSION}_0.jessie_amd64.deb
+
 
 # Creation of the site fails on creating tempfs, ignore it.
 # Now turn tempfs off after creating the site
@@ -72,4 +100,3 @@ RUN omd create ${CMK_SITE} || \
 
 WORKDIR /omd
 ENTRYPOINT ["/opt/bootstrap.sh"]
-
