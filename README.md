@@ -1,4 +1,4 @@
-# nlmacamp/check_mk:1.2.8p12
+# nlmacamp/check_mk:1.2.8p16
 
 
 - [Introduction](#introduction)
@@ -37,13 +37,13 @@ SELinux users should try disabling SELinux using the command `setenforce 0` to s
 Automated builds of the image are available on [Dockerhub](https://hub.docker.com/r/nlmacamp/check_mk) and is the recommended method of installation.
 
 ```bash
-docker pull nlmacamp/check_mk:1.2.8p12
+docker pull nlmacamp/check_mk:1.2.8p16
 ```
 
 Alternatively you can build the image yourself.
 
 ```bash
-docker build -t nlmacamp/check_mk github.com/viper0131/check_mk
+docker build -t elcamlost/debian-check_mk github.com/elcamlost/check_mk
 ```
 
 ## Quickstart
@@ -52,9 +52,9 @@ Start Check_MK using:
 
 ```bash
     docker run -itd --name check_mk \
-           --publish 80:5000 \
+           --publish 5000:5000 \
            --restart always \
-           nlmacamp/check_mk
+           elcamlost/check_mk
 ```
 
 *OPTIONAL:* Specify outgoing mail server with `-e "MAILHUB=<IP:PORT>"`
@@ -81,6 +81,6 @@ Overall state:  running
 
 Fireup the Check_MK GUI:
 
-Browse to http://localhost/mva
+Browse to http://localhost:5000/cmk
 
 login with the default user omdadmin with password omd
