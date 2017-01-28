@@ -81,7 +81,7 @@ RUN \
 ADD    bootstrap.sh /opt/
 EXPOSE 5000/tcp
 
-VOLUME /opt/omd
+#VOLUME /opt/omd
 
 # retrieve and install the check mk binaries
 RUN \
