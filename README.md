@@ -56,7 +56,7 @@ Start Check_MK using:
            --volume /opt/omd/sites/cmk/etc/check_mk:/opt/omd/sites/cmk/etc/check_mk \
            --volume /opt/omd/sites/cmk/var/pnp4nagios/perfdata:/opt/omd/sites/cmk/var/pnp4nagios/perfdata \
            --restart always \
-           elcamlost/check_mk
+           elcamlost/debian-check_mk
 ```
 
 *OPTIONAL:* Specify outgoing mail server with `-e "MAILHUB=<IP:PORT>"`
