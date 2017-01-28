@@ -1,8 +1,10 @@
 FROM debian:latest
 
 ENV CMK_VERSION="1.2.8p16"
-ENV CMK_SITE="cetera"
+ENV CMK_SITE="cmk"
 ENV MAILHUB="undefined"
+
+ARG DEBIAN_FRONTEND=noninteractive
 
 RUN \
     apt-get update && apt-get -y install \
