@@ -53,8 +53,8 @@ Start Check_MK using:
 ```bash
     docker run -itd --name check_mk \
            --publish 5000:5000 \
-           --volume /opt/omd/sites/cmk/etc/check_mk:/opt/omd/sites/cmk/etc/check_mk
-           --volume /opt/omd/sites/cmk/var/pnp4nagios/perfdata:/opt/omd/sites/cmk/var/pnp4nagios/perfdata
+           --volume /opt/omd/sites/cmk/etc/check_mk:/opt/omd/sites/cmk/etc/check_mk \
+           --volume /opt/omd/sites/cmk/var/pnp4nagios/perfdata:/opt/omd/sites/cmk/var/pnp4nagios/perfdata \
            --restart always \
            elcamlost/check_mk
 ```
