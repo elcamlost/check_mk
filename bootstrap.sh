@@ -14,6 +14,5 @@ chown root:mail $CFGFILE
 
 
 # Start check_mk
-omd start
-#&& tail -f /var/log/nagios.log
+omd start && tail -f /var/log/nagios.log
 
