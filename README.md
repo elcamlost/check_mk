@@ -34,13 +34,8 @@ SELinux users should try disabling SELinux using the command `setenforce 0` to s
 
 ## Installation
 
-Automated builds of the image are available on [Dockerhub](https://hub.docker.com/r/nlmacamp/check_mk) and is the recommended method of installation.
 
-```bash
-docker pull elcamlost/check_mk:1.2.8p16
-```
-
-Alternatively you can build the image yourself.
+You can build the image yourself.
 
 ```bash
 docker build -t elcamlost/debian-check_mk github.com/elcamlost/check_mk
