@@ -53,13 +53,12 @@ Start Check_MK using:
 ```bash
     docker run -itd --name check_mk \
            --publish 5000:5000 \
-           --volume /opt/omd/sites/cmk/etc/check_mk:/opt/omd/sites/cmk/etc/check_mk \
-           --volume /opt/omd/sites/cmk/var/pnp4nagios/perfdata:/opt/omd/sites/cmk/var/pnp4nagios/perfdata \
            --restart always \
            elcamlost/debian-check_mk
 ```
 
 *OPTIONAL:* Specify outgoing mail server with `-e "MAILHUB=<IP:PORT>"`
+*OPTIONAL:* Copy /opt/omd/sites directory from container with `docker cp` to your machine and rerun imager with `--volume /opt/omd/sites/:/opt/omd/sites/` option. It allows you to make backup copies of configuration and makes config persistent.
 
 Check the status of check_mk using:
 
