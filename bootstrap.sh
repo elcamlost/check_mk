@@ -12,6 +12,9 @@ CONFIG
 chmod 640 $CFGFILE
 chown root:mail $CFGFILE
 
+if [ -n "${FORCEUPDATE+1}" ]; then
+    omd update --conflict keepold cmk
+fi
 
 # Start check_mk
 omd start && tail -f /var/log/nagios.log
