@@ -1,6 +1,6 @@
 FROM debian:latest
 
-ENV CMK_VERSION="1.2.8p16"
+ENV CMK_VERSION="1.2.8p18"
 ENV CMK_SITE="cmk"
 ENV MAILHUB="undefined"
 
@@ -77,6 +77,7 @@ RUN \
      	apache2-api-20120211 \
      	apache2 \
      	apache2-bin \
+        ssmtp \
 	ssh
 
 ADD    bootstrap.sh /opt/
