@@ -1,6 +1,6 @@
 FROM debian:latest
 
-ENV CMK_VERSION="1.2.8p18"
+ENV CMK_VERSION="1.2.8p20"
 ENV CMK_SITE="cmk"
 ENV MAILHUB="undefined"
 
@@ -103,4 +103,4 @@ RUN omd create ${CMK_SITE} || \
     
 
 WORKDIR /omd
-#ENTRYPOINT ["/opt/bootstrap.sh"]
+ENTRYPOINT ["/opt/bootstrap.sh"]
