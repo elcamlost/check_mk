@@ -1,4 +1,4 @@
-#!/bin/bash
+!/bin/bash
 
 # Create SSMTP config
 CFGFILE=/etc/ssmtp/ssmtp.conf
@@ -18,4 +18,3 @@ fi
 
 # Start check_mk
 omd start && tail -f /var/log/nagios.log
-
