@@ -1,4 +1,4 @@
-# elcamlost/check_mk:1.2.8p18
+# elcamlost/check_mk:1.2.8p20
 
 
 - [Introduction](#introduction)
@@ -52,7 +52,7 @@ Start Check_MK using:
            elcamlost/debian-check_mk
 ```
 
-*OPTIONAL:* Specify outgoing mail server with `-e "MAILHUB=<IP:PORT>"`
+*OPTIONAL:* Specify outgoing mail server with `-e "MAILHUB=IP:PORT"`. Also you can specify rewriteDomain ssmtp setting with `-e "MAILDOMAIN=my.domain.tld"`
 *OPTIONAL:* Copy /opt/omd/sites directory from container with `docker cp` to your machine and rerun imager with `--volume /opt/omd/sites/:/opt/omd/sites/` option. It allows you to make backup copies of configuration and makes config persistent.
 
 Check the status of check_mk using:

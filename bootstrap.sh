@@ -6,6 +6,7 @@ CFGFILE=/etc/ssmtp/ssmtp.conf
 cat >$CFGFILE <<CONFIG
 root=root
 mailhub=${MAILHUB}
+rewriteDomain=${MAILDOMAIN}
 FromLineOverride=YES
 CONFIG
 

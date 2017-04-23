@@ -100,7 +100,9 @@ RUN omd create ${CMK_SITE} || \
     omd config ${CMK_SITE} set APACHE_TCP_ADDR 0.0.0.0 && \
     omd config ${CMK_SITE} set APACHE_TCP_PORT 5000 && \
     ln -s "/omd/sites/${CMK_SITE}/var/log/nagios.log" /var/log/nagios.log
-    
+
+# In modern Debian systems only users inside mail group can use ssmtp. See https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=557948
+RUN usermod -a -G mail ${CMK_SITE}
 
 WORKDIR /omd
 ENTRYPOINT ["/opt/bootstrap.sh"]
