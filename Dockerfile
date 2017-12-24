@@ -1,95 +1,26 @@
-FROM debian:latest
+FROM debian:stretch
 
-ENV CMK_VERSION="1.2.8p20"
+ENV CMK_VERSION="1.4.0p22"
 ENV CMK_SITE="cmk"
 ENV MAILHUB="undefined"
 
 ARG DEBIAN_FRONTEND=noninteractive
 
-RUN \
-    apt-get update && apt-get -y install \
-		time \
-     	curl \
-     	traceroute \
-     	dialog \
-     	dnsutils \
-     	fping \
-     	graphviz \
-     	libapache2-mod-fcgid \
-     	libapache2-mod-proxy-html \
-     	libdbi1 \
-     	python-openssl \
-     	poppler-utils \
-     	python-imaging \
-     	python-reportlab \
-     	libglib2.0-0 \
-     	libgsf-1-114 \
-     	libpcap0.8 \
-     	libfreeradius-client2 \
-     	python-ldap \
-     	xinetd \
-     	unzip \
-     	snmp \
-     	lcab \
-     	rpcbind \
-     	smbclient \
-     	rsync \
-     	php-pear \
-     	php5-sqlite \
-     	libevent-2.0-5 \
-     	libgd3 \
-     	libltdl7 \
-     	libnet-snmp-perl \
-     	libpango1.0-0 \
-     	libperl5.20 \
-     	libsnmp-perl \
-     	libpython2.7 \
-     	patch \
-     	binutils \
-     	rpm \
-     	php5 \
-     	php5-cgi \
-     	php5-cli \
-     	php5-gd \
-     	php5-mcrypt \
-     	libbind9-90 \
-     	libdns100 \
-     	libgssapi-krb5-2 \
-     	libisc95 \
-     	libisccfg90 \
-     	libk5crypto3 \
-     	libkrb5-3 \
-     	liblwres90 \
-     	libxml2 \
-     	bind9-host \
-     	libcurl3 \
-     	libcdt5 \
-     	libcgraph6 \
-     	libexpat1 \
-     	libgd3 \
-     	libgvc6 \
-     	libgvpr2 \
-     	libx11-6 \
-     	libxaw7 \
-     	libxmu6 \
-     	libxt6 \
-     	fonts-liberation \
-     	apache2-api-20120211 \
-     	apache2 \
-     	apache2-bin \
-        ssmtp \
-	ssh
+RUN apt-get -y update && apt-get -y install curl 
 
-ADD    bootstrap.sh /opt/
+ADD bootstrap.sh /opt/
 EXPOSE 5000/tcp
 
 #VOLUME /opt/omd
 
 # retrieve and install the check mk binaries
 RUN \
-	curl --remote-name https://mathias-kettner.de/support/${CMK_VERSION}/check-mk-raw-${CMK_VERSION}_0.jessie_amd64.deb && \
-	dpkg -i check-mk-raw-${CMK_VERSION}_0.jessie_amd64.deb
-
+    $(curl --remote-name https://mathias-kettner.de/support/${CMK_VERSION}/check-mk-raw-${CMK_VERSION}_0.stretch_amd64.deb && \
+      dpkg -i check-mk-raw-${CMK_VERSION}_0.stretch_amd64.deb) || \
+    apt-get install -y -f && \
+    apt-get install -y ssmtp openssh-client && \
+    rm -rf check-mk-raw-${CMK_VERSION}_0.stretch_amd64.deb && \
+    rm -rf /var/lib/apt/lists/*
 
 # Creation of the site fails on creating tempfs, ignore it.
 # Now turn tempfs off after creating the site
@@ -105,4 +36,4 @@ RUN omd create ${CMK_SITE} || \
 RUN usermod -a -G mail ${CMK_SITE}
 
 WORKDIR /omd
-ENTRYPOINT ["/opt/bootstrap.sh"]
+CMD ["/opt/bootstrap.sh"]
