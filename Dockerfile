@@ -1,6 +1,6 @@
 FROM debian:stretch
 
-ENV CMK_VERSION="1.4.0p22"
+ENV CMK_VERSION="1.5.0"
 ENV CMK_SITE="cmk"
 ENV MAILHUB="undefined"
 
