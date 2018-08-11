@@ -1,20 +1,19 @@
 FROM debian:stretch
 
-ENV CMK_VERSION="1.5.0"
 ENV CMK_SITE="cmk"
 ENV MAILHUB="undefined"
-
+ENV CMK_VERSION="1.5.0p1"
 ARG DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get -y update && apt-get -y install curl 
 
-ADD bootstrap.sh /opt/
 EXPOSE 5000/tcp
 
 #VOLUME /opt/omd
 
 # retrieve and install the check mk binaries
 RUN \
+    apt-get -y update && apt-get -y install curl && \
     $(curl --remote-name https://mathias-kettner.de/support/${CMK_VERSION}/check-mk-raw-${CMK_VERSION}_0.stretch_amd64.deb && \
       dpkg -i check-mk-raw-${CMK_VERSION}_0.stretch_amd64.deb) || \
     apt-get install -y -f && \
@@ -36,4 +35,5 @@ RUN omd create ${CMK_SITE} || \
 RUN usermod -a -G mail ${CMK_SITE}
 
 WORKDIR /omd
+ADD bootstrap.sh /opt/
 CMD ["/opt/bootstrap.sh"]
